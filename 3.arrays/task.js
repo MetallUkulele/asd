@@ -1,5 +1,5 @@
 function compareArrays(arr1, arr2) { 
-  let result; 
+  let result;
   
   if (arr1.length === arr2.length) {
     result = arr2.every((value, idx) => value / arr1[idx] === 1);
