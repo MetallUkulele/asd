@@ -1,6 +1,8 @@
 function parseCount(value) {
   parseResult = Number.parseInt(value);
-  if (isNaN(parseResult)) throw new Error("Невалидное значение");
+  if (isNaN(parseResult)) {
+    throw new Error("Невалидное значение");
+  }
 
   return parseResult;  
 }
@@ -11,8 +13,6 @@ function validateCount(value) {
   } catch (err) {
     return err;
   }
-
-
 }
 
 class Triangle {
