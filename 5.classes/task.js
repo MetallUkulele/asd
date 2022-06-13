@@ -152,7 +152,7 @@ class Student {
     }
   
     
-    
+    git
   }
 
   exclude(reason) {
