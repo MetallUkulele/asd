@@ -22,7 +22,7 @@ class PrintEditionItem {
   } 
 
   fix() {        
-    return this.state = this._state * 1.5;
+    return this.state = this.state * 1.5;
   }
 }
 
@@ -103,6 +103,7 @@ class Student {
     this.name = name;
     this.gender = gender;
     this.age = age;
+    this.marks = {};
   }
 
   setSubject(subjectName) {
@@ -112,39 +113,46 @@ class Student {
   addMark(mark, subjectName) {
     
     if (mark < 0 || mark > 5){
-      return console.error('Ошибка, оценка должна быть числом от 1 до 5');
+      throw new Error('Ошибка, оценка должна быть числом от 1 до 5');
     } 
-
-    if (subjectName === undefined) {
-      if (this.marks === undefined) {
-        return this.marks = [mark];
-      } else {
-        return this.marks.push(mark);
-      }
-    }
-    this.subject = subjectName;
-    this.subject.subjectName = [mark];
-  }
-
-  addMarks(...marks) {
-    if (this.marks === undefined) {
-      this.marks = [...marks];
+    
+    if (this.marks[subjectName] === undefined) {
+      this.marks[subjectName] = [mark];
     } else {
-      this.marks.push(...marks);
-    }
+      this.marks[subjectName].push(mark)
+    }     
   }
 
-  getAverageBySubject() {
+  addMarks(subjectName, ...marks) {
 
+    let mark = 
+    if (mark < 0 || mark > 5){
+      throw new Error('Ошибка, оценка должна быть числом от 1 до 5');
+    } 
+    
+    if (this.marks[subjectName] === undefined) {
+      this.marks[subjectName] = [mark];
+    } else {
+      this.marks[subjectName].push(mark)
+    }     
+  }
+
+  getAverageBySubject(subjectName) {
+    if (this.marks[subjectName] === undefined) {
+      throw new Error('Несуществующий предмет');
+    }
+
+    const sum = this.marks[subjectName].reduce((acc, mark) => acc + mark, 0);
+    return sum / this.marks[subjectName].length;
   }
 
   getAverage() {
-    if (this.marks.length === 0) {
+    if (this.marks === {}) {
       return 0;
     }
   
-    const sum = this.marks.reduce((acc, mark) => acc + mark, 0);
-    return sum / this.marks.length;
+    
+    
   }
 
   exclude(reason) {
