@@ -124,8 +124,7 @@ class Student {
   }
 
   addMarks(subjectName, ...marks) {
-
-    let mark = 
+    let mark
     if (mark < 0 || mark > 5){
       throw new Error('Ошибка, оценка должна быть числом от 1 до 5');
     } 
@@ -149,10 +148,28 @@ class Student {
   getAverage() {
     if (this.marks === {}) {
       return 0;
-    }
-  
+    } 
     
-    git
+    let averageMarkBySubject;
+    let arrOfAverageMarks = [];
+    for(let subjectName in this.marks) {
+      averageMarkBySubject = this.marks[subjectName].reduce((acc, mark, idx, arrOfMarks) => {
+        if (idx === arrOfMarks.length - 1) {
+          return (acc + mark) / arrOfMarks.length
+        } else {
+          return acc + mark;
+        }
+      })
+      arrOfAverageMarks.push(averageMarkBySubject);
+    }
+
+    return arrOfAverageMarks.reduce((acc, mark, idx, arr) => {
+      if (idx === arr.length - 1) {
+        return (acc + mark) / arr.length; 
+      } else {
+        return acc + mark;
+      }
+    })
   }
 
   exclude(reason) {
