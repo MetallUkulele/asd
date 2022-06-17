@@ -130,9 +130,9 @@ class Student {
     } 
     
     if (this.marks[subjectName] === undefined) {
-      this.marks[subjectName] = [mark];
+      this.marks[subjectName] = [...marks];
     } else {
-      this.marks[subjectName].push(mark)
+      this.marks[subjectName].push(...marks);
     }     
   }
 
