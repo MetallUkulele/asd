@@ -1,7 +1,7 @@
 class AlarmClock { //создаем класс будильника
-  constructor (id = null) {
+  constructor () {
     this.alarmCollection = [];
-    this.timerId = id;
+    this.timerId = null;
   }
 
   addClock(time, callback, id) { //добавление звонка
@@ -9,25 +9,22 @@ class AlarmClock { //создаем класс будильника
       throw new Error('error text');
     }
 
-    for (let i = 0; i < this.alarmCollection.length; i += 1) { //ошибка если такой id уже существует
-      if (this.alarmCollection[i].id === id) {
-        return console.error(`id со значением '${id}' уже существует в '${this.alarmCollection[i].id}'`);
-      }
+    if (this.alarmCollection.some(clock => clock.id === id)) { //ошибка, если такой id уже существует
+      return console.error('error Id');
     }
-
-    this.alarmCollection.push({id, time, callback}); //добавление звонка в будильник
+    
+    return this.alarmCollection.push({id, time, callback}); //добавление звонка в будильник    
   }
 
   removeClock(id) { //удаление звонка
-    this.alarmCollection.filter((id, index) => {
+    let idIndex = this.alarmCollection.findIndex(clock => clock.id === id);
 
-      if (id === undefined) {
-        return false;
-      }
-
-      this.alarmCollection.splice(index, 1)
-      return true;
-    });
+    if (idIndex === -1) {
+    return false
+    }
+    
+    this.alarmCollection.splice(idIndex, 1)
+    return true;  
   }
 
   getCurrentFormattedTime() { //возвращает текущее время в строковом режиме
@@ -35,17 +32,11 @@ class AlarmClock { //создаем класс будильника
       currentHours = (currentDate.getHours() < 10) ? '0' + currentDate.getHours() : currentDate.getHours(),
       currentMinutes = (currentDate.getMinutes() < 10) ? '0' + currentDate.getMinutes() : currentDate.getMinutes();
 
-    return currentHours + ':' + currentMinutes;
+    return this.currentTime = currentHours + ':' + currentMinutes;
   }
 
   start() {
-    checkClock((ring) => {
-      for (let ring of this.alarmCollection) {
-        if (this.alarmCollection[ring].time === getCurrentFormattedTime()) {
-          return this.alarmCollection[ring].callback;
-        }
-      }
-    })
+    // checkClock = () => 
   }
   
 }
