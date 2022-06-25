@@ -6,11 +6,11 @@ class AlarmClock { //создаем класс будильника
 
   addClock(time, callback, id) { //добавление звонка
     if (id === undefined) { //ошибка, если id не найден
-      throw new Error('error text');
+      throw new Error('Невозможно идентифицировать будильник. Параметр id не был передан');
     }
 
     if (this.alarmCollection.some(clock => clock.id === id)) { //ошибка, если такой id уже существует
-      return console.error('error Id');
+      return console.error('Будильник с таким id уже существует');
     }
     
     return this.alarmCollection.push({id, time, callback}); //добавление звонка в будильник    
@@ -35,38 +35,36 @@ class AlarmClock { //создаем класс будильника
     return this.currentTime = currentHours + ':' + currentMinutes;
   }
 
-  start = () => {
-    const checkClock = (ring) => {
-      this.getCurrentFormattedTime();
-      if (ring.time === this.currentTime) {
-        return ring.callback;
-      }
-    };
+  start = () => {    
     if (this.timerId === null) {
       this.timerId = setInterval(() => {  
-        // this.getCurrentFormattedTime();
         this.alarmCollection.forEach(ring => {
           if (ring.time == this.getCurrentFormattedTime()) {
-            return ring.callback;
+            return ring.callback();
           }
         })
       }, 1000);
     }
+
+    return console.log('Будильник включен');    
   }
 
   stop() {
     if(this.timerId !== null) {
       clearInterval(this.timerId);
-      this.timerId = null;
+      return this.timerId = null;
     }
+
+    return console.log('Будильник выключен');
   }
 
   printAlarms() {
-    this.alarmCollection.forEach(ring => console.log('id: ' + ring.id + ' ' + 'time:' + ring.time));
+    console.log('Печать всех будильников в количестве: ' + this.alarmCollection.length)
+    this.alarmCollection.forEach(ring => console.log('Будильник №' + ring.id + ' заведен на ' + ring.time));
   }
 
   clearAlarms() {
+    this.stop();
     this.alarmCollection = [];
-  }
-  
+  }  
 }
