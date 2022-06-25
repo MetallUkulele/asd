@@ -27,7 +27,7 @@ class AlarmClock { //создаем класс будильника
     return true;  
   }
 
-  getCurrentFormattedTime = () => { //возвращает текущее время в строковом режиме
+  getCurrentFormattedTime() { //возвращает текущее время в строковом режиме
     let currentDate = new Date(),
       currentHours = (currentDate.getHours() < 10) ? '0' + currentDate.getHours() : currentDate.getHours(),
       currentMinutes = (currentDate.getMinutes() < 10) ? '0' + currentDate.getMinutes() : currentDate.getMinutes();
@@ -35,7 +35,7 @@ class AlarmClock { //создаем класс будильника
     return this.currentTime = currentHours + ':' + currentMinutes;
   }
 
-  start = () => {    
+  start() {    
     if (this.timerId === null) {
       this.timerId = setInterval(() => {  
         this.alarmCollection.forEach(ring => {
